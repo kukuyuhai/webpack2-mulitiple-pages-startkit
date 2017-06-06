@@ -67,7 +67,7 @@ var config = {
 	      }
 	    }),
 	    new CopyWebpackPlugin([
-            {from: './src/images', to: './images'} //拷贝图片
+            {from: './src/images', to: './dist/static/images'} //拷贝图片
         ])
 	],
 	externals: {
