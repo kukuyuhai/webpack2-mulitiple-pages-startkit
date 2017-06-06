@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --colors --hot",
+    "dev": "webpack-dev-server --progress --colors --hot --inline",
     "build": "webpack -p"
   },
   "dependencies": {
