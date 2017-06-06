@@ -44,7 +44,7 @@ var config = {
                 loader: 'url-loader',
                 query: {
                     limit: 30720, //30kb 图片转base64。设置图片大小，小于此数则转换。
-                    name: '../../images/[name].[ext]' //输出目录以及名称
+                    name: '../images/[name].[ext]' //输出目录以及名称
                 }
             }
 		]
@@ -67,7 +67,7 @@ var config = {
 	      }
 	    }),
 	    new CopyWebpackPlugin([
-            {from: './src/images', to: './dist/static/images'} //拷贝图片
+            {from: './src/images', to: './static/images'} //拷贝图片
         ])
 	],
 	externals: {
