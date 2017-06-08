@@ -1,13 +1,16 @@
-# 项目初始化安装
-***
-## 1、安装所需要的包
-`npm install`
+# 项目名称
 
-## 2、运行指令
-`npm run dev`
+ webpack2-mulitiple-pages
 
-## 3、预览效果
-输入网址：<br>
-   http://localhost:4200/
-   
+ ## 安装项目依赖包
 
+ npm install
+
+## 项目启动
+
+>* dev `npm run dev`
+>* prod `npm run build`
+
+### 浏览页面地址
+
+http://localhost:4200/
