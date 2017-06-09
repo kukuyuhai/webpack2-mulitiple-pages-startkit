@@ -1,10 +1,6 @@
 var path = require('path');
-var glob = require('glob');
-var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');//将你的行内样式提取到单独的css文件里，
-var HtmlWebpackPlugin = require('html-webpack-plugin'); //html模板生成器
-var CleanPlugin = require('clean-webpack-plugin'); // 文件夹清除工具
-var CopyWebpackPlugin = require('copy-webpack-plugin'); // 文件拷贝
+var configPlugins  = require('./config/_plugin.js')
 var config = {
 	entry: { //配置入口文件，有几个写几个
 		index: './src/js/index.js',
@@ -49,27 +45,7 @@ var config = {
             }
 		]
 	},
-	plugins: [
-		new webpack.ProvidePlugin({ //全局配置加载
-           $: "jquery",
-           jQuery: "jquery",
-           "window.jQuery": "jquery"
-        }),
-        new CleanPlugin(['dist']),// 清空dist文件夹
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common', // 将公共模块提取，生成名为`vendors`的chunk
-			minChunks: 3 // 提取至少3个模块共有的部分
-		}),
-		new ExtractTextPlugin( "static/css/[name].[hash].css"), //提取CSS行内样式，转化为link引入
-		new webpack.optimize.UglifyJsPlugin({ // js压缩
-	      compress: {
-	        warnings: false
-	      }
-	    }),
-	    new CopyWebpackPlugin([
-            {from: './src/images', to: './static/images'} //拷贝图片
-        ])
-	],
+	plugins: configPlugins,
 	externals: {
         $: 'jQuery'
     },
@@ -85,49 +61,3 @@ var config = {
 };
 
 module.exports = config;
-
-var pages = Object.keys(getEntry('./src/*.html'));
-var confTitle = [ 
-	{name: 'index', title: '这是首页标题'},
-	{name: 'list', title: '这是列表标题'},
-	{name: 'about', title: '这是关于我标题'}
-]
-//生成HTML模板
-pages.forEach(function(pathname) {
-	var itemName  = pathname.split('src\\') //根据系统路径来取文件名，window下的做法//,其它系统另测
-    var conf = {
-        filename: itemName[1] + '.html', //生成的html存放路径，相对于path
-        template: pathname + '.html', //html模板路径
-        inject: true, //允许插件修改哪些内容，包括head与body
-        hash: false, //是否添加hash值
-        minify: { //压缩HTML文件
-            removeComments: true,//移除HTML中的注释
-            collapseWhitespace: false //删除空白符与换行符
-        }
-    };
-	conf.chunks = ['common', itemName[1]]
-	for (var i in confTitle) { 
-		if (confTitle[i].name === itemName[1]) { 
-			conf.title = confTitle[i].title
-		}
-	}
-    config.plugins.push(new HtmlWebpackPlugin(conf));
-});
-
-
-//按文件名来获取入口文件（即需要生成的模板文件数量）
-function getEntry(globPath) {
-    var files = glob.sync(globPath);
-    var entries = {},
-        entry, dirname, basename, pathname, extname;
-
-    for (var i = 0; i < files.length; i++) {
-        entry = files[i];
-        dirname = path.dirname(entry);
-        extname = path.extname(entry);
-        basename = path.basename(entry, extname);
-        pathname = path.join(dirname, basename);
-        entries[pathname] = './' + entry;
-    }
-    return entries;
-}

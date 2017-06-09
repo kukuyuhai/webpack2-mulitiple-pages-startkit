@@ -6,11 +6,12 @@
   "license": "MIT",
   "main": "webpack.config.js",
   "scripts": {
-    "dev": "webpack-dev-server --progress --colors --hot --inline",
-    "build": "webpack -p"
+    "dev": "webpack-dev-server --progress --colors --hot --inline --quiet  --open",
+    "build": "webpack -p --hide-modules"
   },
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "jquery": "^1.12.4"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -29,7 +30,6 @@
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.9.0",
     "imports-loader": "^0.6.5",
-    "jquery": "^1.12.4",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "postcss-loader": "^2.0.5",
