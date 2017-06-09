@@ -16,7 +16,9 @@ var configPlugins = [
         name: 'common', // 将公共模块提取，生成名为`vendors`的chunk
         minChunks: 3 // 提取至少3个模块共有的部分
     }),
-    new CleanPlugin(['dist']),// 清空dist文件夹
+    new CleanPlugin(['dist','build'],{
+        root:path.resolve(__dirname,'../')
+    }),// 清空dist文件夹
     new webpack.optimize.UglifyJsPlugin({ // js压缩
         compress: {
             warnings: false
